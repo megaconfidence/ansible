@@ -1,0 +1,88 @@
+- name: Install cli apps
+  hosts: localhost
+  tasks:
+    - name: Add neovim ppa
+      become: true
+      ansible.builtin.apt_repository:
+        repo: "ppa:neovim-ppa/stable"
+        state: present
+        
+    - name: Update apt repos
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 3600
+
+    - name: Install cli packages
+      become: true
+      ansible.builtin.apt:
+        pkg:
+          - zsh
+          - git
+          - curl
+          - wget
+          - stow
+          - ripgrep
+          - xclip
+          - fzf
+          - neovim
+        state: latest
+    - name: Make zsh default
+      become: true
+      user:
+        name: "{{ansible_user_id}}"
+        shell: /usr/bin/zsh
+        
+    - name: Check if Oh-my-zsh is installed
+      ansible.builtin.stat:
+        path: ~/.oh-my-zsh
+      register: ohmyzsh
+      
+    - name: Remove Oh-my-zsh
+      ansible.builtin.shell: rm -rf {{ohmyzsh.stat.path}}
+      when: ohmyzsh.stat.exists
+      
+    - name: Setup Oh-my-zsh
+      ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null
+
+        
+    - name: Install node & npm
+      ansible.builtin.shell: >
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | zsh
+      args:
+        executable: /usr/bin/zsh
+        chdir: "$HOME"
+        creates: "$HOME/.nvm/nvm.sh"
+
+        
+    - name: Install node
+      ansible.builtin.shell: |
+        source ~/.nvm/nvm.sh && nvm install --lts
+      args:
+        executable: /usr/bin/zsh
+        chdir: "$HOME"
+    
+    - name: Install zsh-autosuggestions	
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+        dest: ~/.oh-my-zsh/plugins/zsh-autosuggestions
+        
+    - name: Setup dotfiles
+      ansible.builtin.git:
+        repo: https://github.com/cokoghenun/.dotfiles.git
+        dest: ~/.dotfiles
+        
+    - name: Prepare folders
+      ansible.builtin.shell: rm -rf ~/.zshrc ~/.tmux.conf ~/.gitconfig ~/.config/nvim
+        
+    - name: Install dotfiles
+      ansible.builtin.command: stow .
+      args:
+        chdir: ~/.dotfiles
+
+    - name: Install vim-plug
+      shell: sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+       
+    - name: Install nvim plugins
+      shell: nvim --headless +PlugInstall +qall
