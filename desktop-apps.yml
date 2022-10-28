@@ -1,37 +1,45 @@
-name: Install desktop apps
-hosts: localhost
-tasks:
-  - ansible.builtin.apt:
-      update_cache: true
-      force_apt_get: true
-      cache_valid_time: 3600
-  - ansible.builtin.apt:
-      pkg:
-      - tilix
-      - flatpak
-      - fonts-firacode
-      - gnome-software-plugin-flatpak
-      state: latest
-  - command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  - community.general.flatpak:
-      name:
-      - us.zoom.Zoom
-      - org.kde.okular
-      - org.gnome.Boxes
-      - org.gnome.Music
-      - org.gnome.Notes
-      - org.gnome.gThumb
-      - io.bassi.Amberol
-      - com.google.Chrome
-      - com.obsproject.Studio
-      - org.audacityteam.Audacity
-      - de.haeckerfelix.Fragments
-      - com.rafaelmardojai.Blanket
-      - flathub com.visualstudio.code
-      - flathub org.freedesktop.Piper
-      - org.freefilesync.FreeFileSync
-      - com.github.unrud.VideoDownloader
-      - com.github.GradienceTeam.Gradience
-      - io.github.celluloid_player.Celluloid
-      state: latest
+- name: Install desktop apps
+  hosts: localhost
+  tasks:
+    - name: Update cache
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 3600
+  
+    - name: Install apt apps
+      become: true
+      ansible.builtin.apt:
+        pkg:
+        - tilix
+        - flatpak
+        - fonts-firacode
+        - gnome-software-plugin-flatpak
+        state: latest
+    
+    - name: Install flatpak
+      command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+            
+    - name: Install flatpak apps
+      community.general.flatpak:
+        name:
+        - us.zoom.Zoom
+        - org.kde.okular
+        - org.gnome.Boxes
+        - org.gnome.Music
+        - org.gnome.Notes
+        - org.gnome.gThumb
+        - io.bassi.Amberol
+        - com.google.Chrome
+        - com.obsproject.Studio
+        - org.audacityteam.Audacity
+        - de.haeckerfelix.Fragments
+        - com.rafaelmardojai.Blanket
+        - org.freedesktop.Piper
+        - org.freefilesync.FreeFileSync
+        - com.github.unrud.VideoDownloader
+        - com.github.GradienceTeam.Gradience
+        - io.github.celluloid_player.Celluloid
+        state: present
 

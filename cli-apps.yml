@@ -1,12 +1,6 @@
 - name: Install cli apps
   hosts: localhost
   tasks:
-    - name: Add neovim ppa
-      become: true
-      ansible.builtin.apt_repository:
-        repo: "ppa:neovim-ppa/stable"
-        state: present
-        
     - name: Update apt repos
       become: true
       ansible.builtin.apt:
