@@ -14,6 +14,8 @@
         pkg:
         - tilix
         - flatpak
+        - gnome-boxes
+        - obs-studio
         - fonts-firacode
         - gnome-software-plugin-flatpak
         state: latest
@@ -26,13 +28,12 @@
         name:
         - us.zoom.Zoom
         - org.kde.okular
-        - org.gnome.Boxes
         - org.gnome.Music
         - org.gnome.Notes
         - org.gnome.gThumb
+        - com.microsoft.Edge
         - io.bassi.Amberol
         - com.google.Chrome
-        - com.obsproject.Studio
         - org.audacityteam.Audacity
         - de.haeckerfelix.Fragments
         - com.rafaelmardojai.Blanket
@@ -43,3 +44,14 @@
         - io.github.celluloid_player.Celluloid
         state: present
 
+    - name: Add Howdy ppa
+      become: true
+      ansible.builtin.apt_repository:
+        repo: "ppa:boltgolt/howdy"
+        state: present
+
+    - name: Install Howdy
+      become: true
+      ansible.builtin.apt:
+        name: howdy
+        state: latest

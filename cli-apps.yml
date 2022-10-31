@@ -20,8 +20,10 @@
           - ripgrep
           - xclip
           - fzf
+          - tmux
           - neovim
         state: latest
+
     - name: Make zsh default
       become: true
       user:
@@ -52,7 +54,7 @@
         
     - name: Install node
       ansible.builtin.shell: |
-        source ~/.nvm/nvm.sh && nvm install --lts
+        source ~/.nvm/nvm.sh && nvm install --lts && nvm alias default node
       args:
         executable: /usr/bin/zsh
         chdir: "$HOME"
