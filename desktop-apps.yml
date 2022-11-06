@@ -12,11 +12,13 @@
       become: true
       ansible.builtin.apt:
         pkg:
+        - vlc
         - tilix
         - flatpak
         - gnome-boxes
         - obs-studio
         - fonts-firacode
+        - gnome-tweaks
         - gnome-software-plugin-flatpak
         state: latest
     
