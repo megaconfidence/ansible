@@ -7,6 +7,14 @@
         update_cache: true
         force_apt_get: true
         cache_valid_time: 3600
+
+    - name: Add PPAs
+      become: true
+      ansible.builtin.apt_repository:
+        repo: 
+        - ppa:boltgolt/howdy
+        - ppa:obsproject/obs-studio
+        state: present
   
     - name: Install apt apps
       become: true
@@ -14,11 +22,13 @@
         pkg:
         - vlc
         - tilix
+        - howdy
+        - ffmpeg
         - flatpak
-        - gnome-boxes
         - obs-studio
-        - fonts-firacode
+        - gnome-boxes
         - gnome-tweaks
+        - fonts-firacode
         - gnome-software-plugin-flatpak
         state: latest
     
@@ -46,14 +56,3 @@
         - io.github.celluloid_player.Celluloid
         state: present
 
-    - name: Add Howdy ppa
-      become: true
-      ansible.builtin.apt_repository:
-        repo: "ppa:boltgolt/howdy"
-        state: present
-
-    - name: Install Howdy
-      become: true
-      ansible.builtin.apt:
-        name: howdy
-        state: latest
