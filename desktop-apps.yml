@@ -20,12 +20,10 @@
       become: true
       ansible.builtin.apt:
         pkg:
-        - vlc
         - tilix
         - howdy
         - ffmpeg
         - flatpak
-        - obs-studio
         - gnome-boxes
         - gnome-tweaks
         - fonts-firacode
@@ -43,13 +41,15 @@
         - org.gnome.Music
         - org.gnome.Notes
         - org.gnome.gThumb
-        - com.microsoft.Edge
         - io.bassi.Amberol
+        - org.videolan.VLC
         - com.google.Chrome
+        - com.microsoft.Edge
+        - com.obsproject.Studio
+        - org.freedesktop.Piper
         - org.audacityteam.Audacity
         - de.haeckerfelix.Fragments
         - com.rafaelmardojai.Blanket
-        - org.freedesktop.Piper
         - org.freefilesync.FreeFileSync
         - com.github.unrud.VideoDownloader
         - com.github.GradienceTeam.Gradience
