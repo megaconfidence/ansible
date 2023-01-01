@@ -52,6 +52,7 @@
         - com.rafaelmardojai.Blanket
         - org.freefilesync.FreeFileSync
         - com.github.unrud.VideoDownloader
+        - com.mattjakeman.ExtensionManager
         - com.github.GradienceTeam.Gradience
         - io.github.celluloid_player.Celluloid
         state: present
