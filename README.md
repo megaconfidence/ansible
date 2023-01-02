@@ -13,5 +13,7 @@ ansible-playbook --vault-id @prompt keys.yml
 
 ### desktop-apps.yml
 ```sh
+#install module for flathub
 ansible-galaxy collection install community.general
+ansible-playbook --ask-become-pass desktop-apps.yml
 ```

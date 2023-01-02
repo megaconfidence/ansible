@@ -13,16 +13,13 @@
       ansible.builtin.apt_repository:
         repo: 
         - ppa:boltgolt/howdy
-        - ppa:obsproject/obs-studio
         state: present
   
     - name: Install apt apps
       become: true
       ansible.builtin.apt:
         pkg:
-        - tilix
         - howdy
-        - ffmpeg
         - flatpak
         - gnome-boxes
         - gnome-tweaks
