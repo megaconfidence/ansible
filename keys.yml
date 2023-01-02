@@ -57,6 +57,11 @@
         dest: "{{dir}}/id_ed25519"
         content: "{{private_key}}"
 
+    - name: Change private key file permissions
+      ansible.builtin.file:
+        path: "{{dir}}/id_ed25519"
+        mode: '600'
+
     - name: Start agent
       ansible.builtin.shell: eval "$(ssh-agent)"
 
