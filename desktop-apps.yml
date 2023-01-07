@@ -52,5 +52,6 @@
         - com.mattjakeman.ExtensionManager
         - com.github.GradienceTeam.Gradience
         - io.github.celluloid_player.Celluloid
+        - com.github.iwalton3.jellyfin-media-player
         state: present
 
