@@ -86,3 +86,6 @@
        
     - name: Install nvim plugins
       shell: nvim --headless +PackerSync +qall
+
+    - name: Install docker & docker compose
+      shell: curl -fsSL get.docker.com | sh
