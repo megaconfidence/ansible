@@ -15,6 +15,7 @@
           - zsh
           - git
           - curl
+          - git-lfs
           - wget
           - stow
           - ripgrep
