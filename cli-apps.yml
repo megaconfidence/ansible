@@ -89,3 +89,6 @@
 
     - name: Install docker & docker compose
       shell: curl -fsSL get.docker.com | sh
+
+    - name: Setting up sudoless docker permissions
+      shell: sudo usermod -aG docker $USER && newgrp docker
