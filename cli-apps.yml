@@ -1,14 +1,14 @@
 - name: Install cli apps
   hosts: localhost
   tasks:
-    - name: Update apt repos
+    - name: Updating apt repos
       become: true
       ansible.builtin.apt:
         update_cache: true
         force_apt_get: true
         cache_valid_time: 3600
 
-    - name: Install cli packages
+    - name: Installing cli packages
       become: true
       ansible.builtin.apt:
         pkg:
@@ -25,26 +25,26 @@
           - neovim
         state: latest
 
-    - name: Make zsh default
+    - name: Making zsh default
       become: true
       user:
         name: "{{ansible_user_id}}"
         shell: /usr/bin/zsh
         
-    - name: Check if Oh-my-zsh is installed
+    - name: Checking if Oh-my-zsh is installed
       ansible.builtin.stat:
         path: ~/.oh-my-zsh
       register: ohmyzsh
       
-    - name: Remove Oh-my-zsh
+    - name: Removing Oh-my-zsh
       ansible.builtin.shell: rm -rf {{ohmyzsh.stat.path}}
       when: ohmyzsh.stat.exists
       
-    - name: Setup Oh-my-zsh
+    - name: Setting up Oh-my-zsh
       ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" > /dev/null
 
         
-    - name: Install node & npm
+    - name: Installing nvm
       ansible.builtin.shell: >
         curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.38.0/install.sh | zsh
       args:
@@ -53,43 +53,43 @@
         creates: "$HOME/.nvm/nvm.sh"
 
         
-    - name: Install node
+    - name: Installing node & npm
       ansible.builtin.shell: |
         source ~/.nvm/nvm.sh && nvm install --lts && nvm alias default node
       args:
         executable: /usr/bin/zsh
         chdir: "$HOME"
     
-    - name: Install zsh-autosuggestions	
+    - name: Installing zsh-autosuggestions	
       ansible.builtin.git:
         repo: https://github.com/zsh-users/zsh-autosuggestions
         dest: ~/.oh-my-zsh/plugins/zsh-autosuggestions
         
-    - name: Setup dotfiles
+    - name: Setting up dotfiles
       ansible.builtin.git:
         repo: https://github.com/cokoghenun/.dotfiles.git
         dest: ~/.dotfiles
         
-    - name: Prepare folders
+    - name: Preparing folders
       ansible.builtin.shell: rm -rf ~/.zshrc ~/.tmux.conf ~/.gitconfig ~/.config/nvim
         
-    - name: Install dotfiles
+    - name: Installing dotfiles
       ansible.builtin.command: stow .
       args:
         chdir: ~/.dotfiles
 
-    - name: Install packer
+    - name: Installing packer
       ansible.builtin.git:
         repo: https://github.com/wbthomason/packer.nvim
         dest: ~/.local/share/nvim/site/pack/packer/start/packer.nvim
         depth: 1
        
-    - name: Install nvim plugins
-      shell: nvim --headless +PackerSync +qall
+    - name: Installing nvim plugins
+      ansible.builtin.shell: nvim --headless -c 'so ~/.dotfiles/.config/nvim/lua/config/packer.lua' -c PackerInstall -c PackerSync +q
 
-    - name: Install docker & docker compose
-      shell: curl -fsSL get.docker.com | sh
+    - name: Installing docker & docker compose
+      ansible.builtin.shell: curl -fsSL get.docker.com | sh
 
     - name: Setting up sudoless docker permissions
-      shell: usermod -aG docker $USER && newgrp docker
+      ansible.builtin.shell: usermod -aG docker $USER && newgrp docker
       become: true
