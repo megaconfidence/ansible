@@ -15,7 +15,7 @@
         - ppa:boltgolt/howdy
         state: present
   
-    - name: Install apt apps
+    - name: Installing apt apps
       become: true
       ansible.builtin.apt:
         pkg:
@@ -27,10 +27,10 @@
         - gnome-software-plugin-flatpak
         state: latest
     
-    - name: Install flatpak
+    - name: Installing flatpak
       command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
             
-    - name: Install flatpak apps
+    - name: Installing flatpak apps
       community.general.flatpak:
         name:
         - us.zoom.Zoom

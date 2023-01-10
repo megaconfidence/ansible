@@ -42,28 +42,28 @@
       64326636643731633339
 
   tasks:
-    - name: Create directory
+    - name: Creating directory
       ansible.builtin.file:
         path: "{{dir}}"
         state: directory
 
-    - name: Create public key
+    - name: Creating public key
       ansible.builtin.copy:
         dest: "{{dir}}/id_ed25519.pub"
         content: "{{public_key}}"
 
-    - name: Create private key
+    - name: Creating private key
       ansible.builtin.copy:
         dest: "{{dir}}/id_ed25519"
         content: "{{private_key}}"
 
-    - name: Change private key file permissions
+    - name: Changing private key file permissions
       ansible.builtin.file:
         path: "{{dir}}/id_ed25519"
         mode: '600'
 
-    - name: Start agent
+    - name: Starting agent
       ansible.builtin.shell: eval "$(ssh-agent)"
 
-    - name: Add keys to agent
+    - name: Adding keys to agent
       ansible.builtin.command: ssh-add ~/.ssh/id_ed25519
