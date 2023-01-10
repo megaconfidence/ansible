@@ -1,0 +1,43 @@
+- name: Install neovim
+  hosts: localhost
+  tasks:
+    - name: Update apt repos
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+        force_apt_get: true
+        cache_valid_time: 3600
+
+    - name: Installing dependencies
+      become: true
+      ansible.builtin.apt:
+        pkg:
+          - ninja-build
+          - gettext 
+          - libtool 
+          - libtool-bin 
+          - autoconf 
+          - automake 
+          - cmake
+          - g++ 
+          - pkg-config 
+          - unzip 
+          - curl 
+          - doxygen
+        state: latest
+
+    - name: Cloning repo
+      ansible.builtin.git:
+        repo: https://github.com/neovim/neovim.git
+        dest: ~/neovim/
+
+    - name: Building
+      ansible.builtin.shell: make CMAKE_BUILD_TYPE=Release
+      args:
+        chdir: ~/neovim/
+
+    - name: Installing
+      ansible.builtin.shell: make install
+      become: true
+      args:
+        chdir: ~/neovim/
