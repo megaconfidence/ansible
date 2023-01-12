@@ -26,7 +26,10 @@
         - fonts-firacode
         - gnome-software-plugin-flatpak
         state: latest
-    
+
+    - name: Installing gnome extensions
+      ansible.builtin.shell: chmod +x extensions.sh && ./extensions.sh
+
     - name: Installing flatpak
       command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
             
