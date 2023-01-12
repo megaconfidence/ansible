@@ -85,7 +85,7 @@
         depth: 1
        
     - name: Installing nvim plugins
-      ansible.builtin.shell: nvim --headless -c 'so ~/.dotfiles/.config/nvim/lua/config/packer.lua' -c PackerInstall -c PackerSync +q
+      ansible.builtin.shell: nvim --headless -c 'so ~/.dotfiles/.config/nvim/lua/config/packer.lua' -c PackerSync +q
 
     - name: Installing docker & docker compose
       ansible.builtin.shell: curl -fsSL get.docker.com | sh

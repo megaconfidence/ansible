@@ -49,5 +49,5 @@
         chdir: /home/megaconfidence/neovim/
         
     - name: Installing neovim plugins
-      ansible.builtin.shell: nvim --headless -c 'so ~/.dotfiles/.config/nvim/lua/config/packer.lua' -c PackerInstall -c PackerSync +q
+      ansible.builtin.shell: nvim --headless -c 'so ~/.dotfiles/.config/nvim/lua/config/packer.lua' -c PackerSync +q
       # ansible.builtin.shell: nvim --headless +'so ~/.dotfiles/.config/nvim/lua/config/packer.lua' +PackerInstall +q
