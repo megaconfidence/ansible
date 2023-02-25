@@ -45,6 +45,7 @@
         - org.videolan.VLC
         - com.google.Chrome
         - com.microsoft.Edge
+        - me.kozec.syncthingtk
         - com.obsproject.Studio
         - org.freedesktop.Piper
         - org.audacityteam.Audacity
