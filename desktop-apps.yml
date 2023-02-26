@@ -21,11 +21,15 @@
         pkg:
         - howdy
         - flatpak
+        - syncthing 
         - gnome-boxes
         - gnome-tweaks
         - fonts-firacode
         - gnome-software-plugin-flatpak
         state: latest
+
+    - name: Creating Syncthing daemon
+      ansible.builtin.shell: systemctl --user enable syncthing.service && systemctl --user start syncthing.service
 
     - name: Installing gnome extensions
       ansible.builtin.shell: chmod +x extensions.sh && ./extensions.sh
@@ -45,7 +49,6 @@
         - org.videolan.VLC
         - com.google.Chrome
         - com.microsoft.Edge
-        - me.kozec.syncthingtk
         - com.obsproject.Studio
         - org.freedesktop.Piper
         - org.audacityteam.Audacity
