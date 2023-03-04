@@ -5,6 +5,7 @@ https://extensions.gnome.org/extension/1319/gsconnect/
 https://extensions.gnome.org/extension/1162/emoji-selector/
 https://extensions.gnome.org/extension/16/auto-move-windows/
 https://extensions.gnome.org/extension/779/clipboard-indicator/
+https://extensions.gnome.org/extension/615/appindicator-support/
 https://extensions.gnome.org/extension/3724/net-speed-simplified/
 )
 
