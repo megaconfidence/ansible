@@ -19,7 +19,6 @@
           - wget
           - stow
           - ripgrep
-          - xclip
           - fzf
           - tmux
           - neovim
